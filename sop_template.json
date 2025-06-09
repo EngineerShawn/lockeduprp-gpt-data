@@ -1,0 +1,94 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Locked Up RP SOP and Protocol API",
+    "description": "Generates and updates DOC-style SOPs and riot protocols without needing a live API.",
+    "version": "v1.0.0",
+    "author": "EngineerShawn"
+  },
+  "paths": {
+    "/generate-sop": {
+      "get": {
+        "description": "Generate a detailed Texas Department of Corrections SOP for Locked Up RP. This runs only if no SOP file is linked to the GPT.",
+        "operationId": "GenerateSOP",
+        "responses": {
+          "200": {
+            "description": "Generated detailed SOP successfully.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "title": "Texas Department of Corrections Standard Operating Procedure (SOP)",
+                  "sections": [
+                    {
+                      "title": "Inmate Intake Protocol",
+                      "content": "All new inmates must be processed through the Intake Wing. Fingerprinting, mugshots, medical evaluation, and housing assignment are mandatory prior to placement."
+                    },
+                    {
+                      "title": "Contraband Policy",
+                      "content": "COs are to perform random cell inspections every 48 hours. Any inmate found in possession of prohibited items is to be placed on report and considered for solitary confinement pending review."
+                    },
+                    {
+                      "title": "Use of Force Guidelines",
+                      "content": "Only approved non-lethal force may be used in compliance with DOC guidelines. All use of force must be logged and reviewed by a shift supervisor."
+                    },
+                    {
+                      "title": "Uniform Policy",
+                      "content": "Correctional Officers must wear the standard-issue DOC uniform including name badge, utility belt, and radio. Uniform inspections are conducted at the start of each shift."
+                    },
+                    {
+                      "title": "Chain of Command",
+                      "content": "COs report to Shift Sergeants, who report to the Lieutenant. Lieutenants are overseen by the Captain of the Guard, with final authority residing with the Warden."
+                    },
+                    {
+                      "title": "Lockdown Procedures",
+                      "content": "In the event of a disturbance, the initiating CO is to call the code level, notify central command, and seal affected blocks. Emergency teams are to be deployed per Redbook guidelines."
+                    },
+                    {
+                      "title": "Commissary Procedures",
+                      "content": "Inmates are permitted to order commissary once per week. Approved items include hygiene, snacks, and paper supplies. Orders are monitored and delivered under CO supervision."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update-sop": {
+      "post": {
+        "description": "Update the existing SOP file linked in the GPT if changes are detected or requested.",
+        "operationId": "UpdateSOP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "updates": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "section": { "type": "string" },
+                        "newContent": { "type": "string" }
+                      },
+                      "required": ["section", "newContent"]
+                    }
+                  }
+                },
+                "required": ["updates"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SOP file updated successfully."
+          }
+        }
+      }
+    }
+  }
+}
