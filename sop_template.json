@@ -6,6 +6,11 @@
     "version": "v1.0.0",
     "author": "EngineerShawn"
   },
+    "servers": [
+    {
+      "url": "https://raw.githubusercontent.com/EngineerShawn/lockeduprp-gpt-data/main"
+    }
+  ],
   "paths": {
     "/generate-sop": {
       "get": {
